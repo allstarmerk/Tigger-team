@@ -13,8 +13,8 @@ from pygame.locals import *
 
 FPS = 60
 ANIMATION_SPEED = 0.18  # pixels per millisecond
-WIN_WIDTH = 284 * 2     #image size for the games terminal window: 284x512
-WIN_HEIGHT = 512
+WINDOW_WIDTH = 284 * 2     #image size for the games terminal window: 284x512
+WINDOW_HEIGHT = 512
 
 
 class Lizard(pygame.sprite.Sprite):
@@ -142,21 +142,21 @@ class Cactus_Pair(pygame.sprite.Sprite):
         """Initialises a new random Cactus_Pair.
 
         The new Cactus_Pair will automatically be assigned an x attribute of
-        float(WIN_WIDTH - 1).
+        float(WINDOW_WIDTH - 1).
 
         Arguments:
         Cactus_Tip_img: The image to use to represent a cactus end piece.
         Cactus_body_img: The image to use to represent one horizontal slice
             of a cactus body.
         """
-        self.x = float(WIN_WIDTH - 1)
+        self.x = float(WINDOW_WIDTH - 1)
         self.Recorded_Score = False
 
-        self.image = pygame.Surface((Cactus_Pair.WIDTH, WIN_HEIGHT), SRCALPHA)
+        self.image = pygame.Surface((Cactus_Pair.WIDTH, WINDOW_HEIGHT), SRCALPHA)
         self.image.convert()   # speeds up blitting
         self.image.fill((0, 0, 0, 0))
         total_Cactus_body_pieces = int(
-            (WIN_HEIGHT -                  # fill window from top to bottom
+            (WINDOW_HEIGHT -                  # fill window from top to bottom
              3 * Lizard.HEIGHT -             # make room for lizard to fit through
              3 * Cactus_Pair.PIECE_HEIGHT) /  # 2 end pieces + 1 body piece
             Cactus_Pair.PIECE_HEIGHT          # to get number of pipe pieces
@@ -166,9 +166,9 @@ class Cactus_Pair(pygame.sprite.Sprite):
 
         # bottom cactus
         for i in range(1, self.Bottom_Cactus_Pair_Pieces + 1):
-            piece_pos = (0, WIN_HEIGHT - i*Cactus_Pair.PIECE_HEIGHT)
+            piece_pos = (0, WINDOW_HEIGHT - i*Cactus_Pair.PIECE_HEIGHT)
             self.image.blit(Cactus_body_img, piece_pos)
-        bottom_Cactus_Tip_y = WIN_HEIGHT - self.bottom_height_px
+        bottom_Cactus_Tip_y = WINDOW_HEIGHT - self.bottom_height_px
         bottom_end_piece_pos = (0, bottom_Cactus_Tip_y - Cactus_Pair.PIECE_HEIGHT)
         self.image.blit(Cactus_Tip_img, bottom_end_piece_pos)
 
@@ -198,7 +198,7 @@ class Cactus_Pair(pygame.sprite.Sprite):
     @property
     def visible(self):
         """Get whether this Cactus_Pair on screen, visible to the player."""
-        return -Cactus_Pair.WIDTH < self.x < WIN_WIDTH
+        return -Cactus_Pair.WIDTH < self.x < WINDOW_WIDTH
 
     @property
     def rect(self):
@@ -225,9 +225,9 @@ class Cactus_Pair(pygame.sprite.Sprite):
 
 
 def load_images():
-    """Load all images required by the game and return a dict of them.
+    """Load all images required by the game.
 
-    The returned dict has the following keys:
+    The returned has the following keys:
     background: The game's background image.
     lizard-FacingUp: An image of the lizard with its wing pointing upward.
         Use this and lizard-FacingDown to create a flapping lizard.
@@ -250,8 +250,7 @@ def load_images():
         img_file_name: The file name (including its extension, e.g.
             '.png') of the required image, without a file path.
         """
-        # Look for images relative to this script, so we don't have to "cd" to
-        # the script's directory before running it.
+    
         file_name = os.path.join(os.path.dirname(__file__),
                                  'images', img_file_name)
         img = pygame.image.load(file_name)
@@ -294,7 +293,7 @@ def main():
 
     pygame.init()
 
-    display_surface = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+    display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption('Flappy Lizard')
 
     clock = pygame.time.Clock()
@@ -303,7 +302,7 @@ def main():
 
     # the lizard stays in the same x position, so lizard.x is a constant
     # center lizard on screen
-    lizard = Lizard(50, int(WIN_HEIGHT/2 - Lizard.HEIGHT/2), 2,
+    lizard = Lizard(50, int(WINDOW_HEIGHT/2 - Lizard.HEIGHT/2), 2,
                 (images['lizard-FacingUp'], images['lizard-FacingDown']))
 
     pipes = deque()
@@ -334,11 +333,11 @@ def main():
             continue  
 
         # checks for collisions
-        pipe_collision = any(p.collides_with(lizard) for p in pipes)
-        if pipe_collision or 0 >= lizard.y or lizard.y >= WIN_HEIGHT - Lizard.HEIGHT:
+        Cactus_Collision = any(p.collides_with(lizard) for p in pipes)
+        if Cactus_Collision or 0 >= lizard.y or lizard.y >= WINDOW_HEIGHT - Lizard.HEIGHT:
             done = True
 
-        for x in (0, WIN_WIDTH / 2):
+        for x in (0, WINDOW_WIDTH / 2):
             display_surface.blit(images['background'], (x, 0))
 
         while pipes and not pipes[0].visible:
@@ -358,7 +357,7 @@ def main():
                 p.Recorded_Score = True
 
         score_surface = score_font.render(str(score), True, (255, 255, 255))
-        score_x = WIN_WIDTH/2 - score_surface.get_width()/2
+        score_x = WINDOW_WIDTH/2 - score_surface.get_width()/2
         display_surface.blit(score_surface, (score_x, Cactus_Pair.PIECE_HEIGHT))
 
         pygame.display.flip()
