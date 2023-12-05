@@ -21,7 +21,7 @@ class Lizard(pygame.sprite.Sprite):
     """ This class represents the player-controlled lizard in the game.
 The lizard serves as the player and responds to player input. 
 It can ascend when prompted (space bar up arrow), or descend due to gravity when not climbing. 
-The main objective is to navigate the lizard through the openings between pipes, earning one point for each successful passage. 
+The main objective is to navigate the lizard through the openings between Cactus, earning one point for each successful passage. 
 Colliding with a pipe results in the end of the game.
 
 Attributes:
@@ -236,7 +236,7 @@ def load_images():
     Cactus-Tip: An image of a cactus end piece.
         Use this and cactus-body to make cactus peices.
     Cactus-body: An image of a slice of a cactus body.  Use this and
-        cactus-body to make pipes.
+        cactus-body to make Cactus.
     """
 
     def load_image(img_file_name):
@@ -305,7 +305,7 @@ def main():
     lizard = Lizard(50, int(WINDOW_HEIGHT/2 - Lizard.HEIGHT/2), 2,
                 (images['lizard-FacingUp'], images['lizard-FacingDown']))
 
-    pipes = deque()
+    Cactus = deque()
 
     Counter_For_Frames = 0  # this counter is only incremented if the game isn't paused
     score = 0
@@ -317,7 +317,7 @@ def main():
         # The cactuses being added would be messed up if a player pauses game(using p).
         if not (paused or Counter_For_Frames % msec_to_frames(Cactus_Pair.ADD_INTERVAL)):
             pp = Cactus_Pair(images['Cactus-Tip'], images['Cactus-body'])
-            pipes.append(pp)
+            Cactus.append(pp)
 
         for e in pygame.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
@@ -333,17 +333,17 @@ def main():
             continue  
 
         # checks for collisions
-        Cactus_Collision = any(p.collides_with(lizard) for p in pipes)
+        Cactus_Collision = any(p.collides_with(lizard) for p in Cactus)
         if Cactus_Collision or 0 >= lizard.y or lizard.y >= WINDOW_HEIGHT - Lizard.HEIGHT:
             done = True
 
         for x in (0, WINDOW_WIDTH / 2):
             display_surface.blit(images['background'], (x, 0))
 
-        while pipes and not pipes[0].visible:
-            pipes.popleft()
+        while Cactus and not Cactus[0].visible:
+            Cactus.popleft()
 
-        for p in pipes:
+        for p in Cactus:
             p.update()
             display_surface.blit(p.image, p.rect)
 
@@ -351,7 +351,7 @@ def main():
         display_surface.blit(lizard.image, lizard.rect)
 
         # update and display score
-        for p in pipes:
+        for p in Cactus:
             if p.x + Cactus_Pair.WIDTH < lizard.x and not p.Recorded_Score:
                 score += 1
                 p.Recorded_Score = True
