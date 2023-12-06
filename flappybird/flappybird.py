@@ -22,7 +22,7 @@ class Lizard(pygame.sprite.Sprite):
 The lizard serves as the player and responds to player input. 
 It can ascend when prompted (space bar up arrow), or descend due to gravity when not climbing. 
 The main objective is to navigate the lizard through the openings between Cactus, earning one point for each successful passage. 
-Colliding with a pipe results in the end of the game.
+Colliding with a cactus results in the end of the game.
 
 Attributes:
 - x: The X coordinate of the lizard.
@@ -159,7 +159,7 @@ class Cactus_Pair(pygame.sprite.Sprite):
             (WINDOW_HEIGHT -                  # fill window from top to bottom
              3 * Lizard.HEIGHT -             # make room for lizard to fit through
              3 * Cactus_Pair.PIECE_HEIGHT) /  # 2 end pieces + 1 body piece
-            Cactus_Pair.PIECE_HEIGHT          # to get number of pipe pieces
+            Cactus_Pair.PIECE_HEIGHT          # to get number of cactus pieces
         )
         self.Bottom_Cactus_Pair_Pieces = randint(1, total_Cactus_body_pieces)
         self.Top_Cactus_Pair_Pieces = total_Cactus_body_pieces - self.Bottom_Cactus_Pair_Pieces
@@ -187,12 +187,12 @@ class Cactus_Pair(pygame.sprite.Sprite):
 
     @property
     def top_height_px(self):
-        """Get the top pipe's height, in pixels."""
+        """Get the top cactus's height, in pixels."""
         return self.Top_Cactus_Pair_Pieces * Cactus_Pair.PIECE_HEIGHT
 
     @property
     def bottom_height_px(self):
-        """Get the bottom pipe's height, in pixels."""
+        """Get the bottom cactus's height, in pixels."""
         return self.Bottom_Cactus_Pair_Pieces * Cactus_Pair.PIECE_HEIGHT
 
     @property
@@ -215,7 +215,7 @@ class Cactus_Pair(pygame.sprite.Sprite):
         self.x -= ANIMATION_SPEED * frames_to_msec(Frame_Counter)
 
     def collides_with(self, lizard):
-        """Get whether the lizard collides with a pipe in this Cactus_Pair.
+        """Get whether the lizard collides with a cactus in this Cactus_Pair.
 
         Arguments:
         lizard: The lizard which should be tested for collision with this
