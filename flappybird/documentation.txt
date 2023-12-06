@@ -2,35 +2,35 @@ Flappy Bird Game Documentation
   
 Overview
 
-The provided code implements a simple version of the popular game Flappy Bird using the Pygame library. The game consists of a bird that the player controls, and the objective is to navigate the bird through openings between pipes. The game ends if the bird collides with a pipe or if it goes out of the screen.
+The provided code implements a simple version of the popular game Flappy Bird using the Pygame library. The game consists of a lizard that the player controls, and the objective is to navigate the lizard through openings between cacti. The game ends if the lizard collides with a cactus or if it goes out of the screen.
 
   Classes
   
-Bird Class
+Lizard Class
       Attributes
 
-    x: The X-coordinate of the bird.
-    y: The Y-coordinate of the bird.
-    msec_to_climb: The number of milliseconds left for the bird to climb.
-    WIDTH: The width of the bird's image.
-    HEIGHT: The height of the bird's image.
-    SINK_SPEED: The speed at which the bird descends in pixels per millisecond.
-    CLIMB_SPEED: The speed at which the bird ascends in pixels per millisecond.
+    x: The X-coordinate of the lizard.
+    y: The Y-coordinate of the lizard.
+    msec_to_climb: The number of milliseconds left for the lizard to climb.
+    WIDTH: The width of the lizard's image.
+    HEIGHT: The height of the lizard's image.
+    SINK_SPEED: The speed at which the lizard descends in pixels per millisecond.
+    CLIMB_SPEED: The speed at which the lizard ascends in pixels per millisecond.
     CLIMB_DURATION: The total duration, in milliseconds, for a complete climb.
 
 Methods
 
-    __init__(self, x, y, msec_to_climb, images): Initializes a new Bird instance.
-    update(self, delta_frames=1): Updates the bird's position based on elapsed frames.
-    image: Returns the bird's current image for rendering.
+    __init__(self, x, y, msec_to_climb, images): Initializes a new lizard instance.
+    update(self, delta_frames=1): Updates the lizard's position based on elapsed frames.
+    image: Returns the lizard's current image for rendering.
     mask: Returns a bitmask for collision detection.
-    rect: Returns the Rect object representing the bird's position and dimensions.
+    rect: Returns the Rect object representing the lizard's position and dimensions.
 
-PipePair Class
+Cactus_Pair Class
         Attributes
 
-    x: The X-coordinate of the PipePair.
-    image: A pygame.Surface representing the PipePair.
+    x: The X-coordinate of the Cactus_Pair.
+    image: A pygame.Surface representing the Cactus_Pair.
     mask: A bitmask for collision detection.
     top_pieces: The number of pieces in the top pipe.
     bottom_pieces: The number of pieces in the bottom pipe.
@@ -40,12 +40,12 @@ PipePair Class
 
 Methods
 
-    __init__(self, pipe_end_img, pipe_body_img): Initializes a new random PipePair.
-    update(self, delta_frames=1): Updates the PipePair's position based on elapsed frames.
-    collides_with(self, bird): Checks if the bird collides with the PipePair.
+    __init__(self, pipe_end_img, pipe_body_img): Initializes a new random Cactus_Pair.
+    update(self, delta_frames=1): Updates the Cactus_Pair's position based on elapsed frames.
+    collides_with(self, lizard): Checks if the lizard collides with the Cactus_Pair.
     top_height_px: Returns the height of the top pipe in pixels.
     bottom_height_px: Returns the height of the bottom pipe in pixels.
-    visible: Returns whether the PipePair is on screen.
+    visible: Returns whether the Cactus_Pair is on screen.
 
 Other Functions
 
@@ -72,19 +72,18 @@ bash: pip install pygame
 
 Controls
 
-    Space, Up Arrow, Enter: Make the bird ascend.
+    Space, Up Arrow, Enter: Make the lizard ascend.
     P, Pause/Break: Pause or resume the game.
     Esc: Quit the game.
 
 Game Logic
 
-    The bird's position is updated based on user input and gravity.
+    The lizard's position is updated based on user input and gravity.
     Pipes are added at regular intervals, and their positions are updated.
-    The game checks for collisions between the bird and pipes.
-    The score is incremented as the bird passes through openings between pipes.
-    The game ends if the bird collides with a pipe or goes out of the screen.
+    The game checks for collisions between the lizard and pipes.
+    The score is incremented as the lizard passes through openings between pipes.
+    The game ends if the lizard collides with a pipe or goes out of the screen.
 
 Conclusion
 
-This documentation provides an overview of the Flappy Bird game implementation using Pygame. It covers the classes, methods, constants, and game logic. Players can control the bird to navigate through pipes and earn points. The game loop continues until the player quits or the bird collides with an obstacle.
-ChatGPT can make mistakes. Consider checking important information.
+This documentation provides an overview of the Flappy lizard game implementation using Pygame. It covers the classes, methods, constants, and game logic. Players can control the lizard to navigate through pipes and earn points. The game loop continues until the player quits or the lizard collides with an obstacle.
