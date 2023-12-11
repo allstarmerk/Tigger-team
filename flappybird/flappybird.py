@@ -284,11 +284,15 @@ def msec_to_frames(milliseconds, fps=FPS):
     return fps * milliseconds / 1000.0
 
 
-def main():
+def gameLoop():
     """The application's entry point.
 
     If someone executes this module (instead of importing it, for
     example), this function is called.
+    """
+    
+    """
+    Updated gameplay loop to be within this function as opposed to main
     """
 
     pygame.init()
@@ -365,11 +369,17 @@ def main():
     print('You Lost, Game over! Your Score Was: %i' % score)
     print('   Thanks For Playing! :) -From Tiger Team (Johnathan S, Dylan, John M, Mincie)')
     pygame.quit()
+    
+#want to put the loss sequence (game close, tell final score) in its own function
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # Check if the current module is the main module, identified by __name__ being 'flappyLizard'.
     # If the module is imported, __name__ will be different. In that case, this block won't be executed.
     # If executed (e.g., by double-clicking the file), invoke the main function.
- 
-    main()
+  #   gameLoop()
+
+def main():
+    gameLoop()
+    
+main()
