@@ -14,9 +14,9 @@ Lizard Class
     msec_to_climb: The number of milliseconds left for the lizard to climb.
     WIDTH: The width of the lizard's image.
     HEIGHT: The height of the lizard's image.
-    SINK_SPEED: The speed at which the lizard descends in pixels per millisecond.
-    CLIMB_SPEED: The speed at which the lizard ascends in pixels per millisecond.
-    CLIMB_DURATION: The total duration, in milliseconds, for a complete climb.
+    GRAVITY_SPEED: The speed at which the lizard descends in pixels per millisecond.
+    FLYING_SPEED: The speed at which the lizard ascends in pixels per millisecond.
+    FLY_TIME: The total duration, in milliseconds, for a complete climb.
 
 Methods
 
