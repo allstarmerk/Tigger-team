@@ -283,6 +283,21 @@ def msec_to_frames(milliseconds, fps=FPS):
     """
     return fps * milliseconds / 1000.0
 
+pygame.init()
+
+font = pygame.font.SysFont("arialblack", 40)
+TEXT_COL = (255, 255, 255)
+
+display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption('Flappy Lizard')
+
+clock = pygame.time.Clock()
+score_font = pygame.font.SysFont(None, 32, bold=True)  # default font
+images = load_images()
+
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    display_surface.blit(img,(x, y))
 
 def gameLoop():
     """The application's entry point.
@@ -294,15 +309,8 @@ def gameLoop():
     """
     Updated gameplay loop to be within this function as opposed to main
     """
-
-    pygame.init()
-
-    display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption('Flappy Lizard')
-
-    clock = pygame.time.Clock()
-    score_font = pygame.font.SysFont(None, 32, bold=True)  # default font
-    images = load_images()
+    #This is me attempting to create a initial menu
+    draw_text("Press SPACE to jump", font, TEXT_COL, 160, 250)
 
     # the lizard stays in the same x position, so lizard.x is a constant
     # center lizard on screen
