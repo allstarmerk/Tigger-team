@@ -4,7 +4,6 @@
 
 import math
 import os
-import time
 from random import randint
 from collections import deque
 
@@ -311,7 +310,9 @@ def startMenuLoop():
     run = True
     while run:
         display_surface.fill((52, 78, 91))
-        draw_text("Press SPACE to jump", font, TEXT_COL, 50, 200)
+        draw_text("FLAPPY LIZARD", font, TEXT_COL, 50, 100)
+        draw_text("Press SPACE to Jump and Start!!", font, TEXT_COL, 50, 150)
+        draw_text("Created by the Tiger Team", font, TEXT_COL, 50, 400)
         
         #Detects button press that finishes this function and since
         #it is run in main, it goes right into the main game loop
