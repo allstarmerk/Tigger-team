@@ -300,11 +300,23 @@ def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     display_surface.blit(img,(x, y))
     
+    
+"""
+This is the start menu loop where the player starts out
+it shows a little start prompt and message for the player
+to get started
+"""
+
 def startMenuLoop():
     run = True
     while run:
         display_surface.fill((52, 78, 91))
         draw_text("Press SPACE to jump", font, TEXT_COL, 50, 200)
+        
+        #Detects button press that finishes this function and since
+        #it is run in main, it goes right into the main game loop
+        #and runs the game
+        
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
@@ -388,11 +400,17 @@ def gameLoop():
         pygame.display.flip()
         Counter_For_Frames += 1
         
-        
+    #Runs the end menu loop with the score variable so that it can be displayed to the user
     endMenuLoop(score)
     print('You Lost, Game over! Your Score Was: %i' % score)
     print('   Thanks For Playing! :) -From Tiger Team (Johnathan S, Dylan, John M, Mincie)')
     
+"""
+This is the end menu loop that is run at the end of the main gameplay loop.
+This function prompts the user if they want to play again or if they
+want to quit the game.
+It also displays the user's score from their previous play
+"""
 def endMenuLoop(score):
     run = True
     while run:
@@ -407,18 +425,7 @@ def endMenuLoop(score):
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     pygame.display.quit()
-        #if event.type == pygame.QUIT:
-            #run = False
         pygame.display.update()
-
-    
-    
-    
-        
-    
-    
-
-
 
 def main():
     startMenuLoop()
