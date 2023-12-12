@@ -4,6 +4,7 @@
 
 import math
 import os
+import time
 from random import randint
 from collections import deque
 
@@ -285,7 +286,7 @@ def msec_to_frames(milliseconds, fps=FPS):
 
 pygame.init()
 
-font = pygame.font.SysFont("arialblack", 40)
+font = pygame.font.SysFont("arialblack", 20)
 TEXT_COL = (255, 255, 255)
 
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -298,6 +299,20 @@ images = load_images()
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     display_surface.blit(img,(x, y))
+    
+def startMenuLoop():
+    run = True
+    while run:
+        display_surface.fill((52, 78, 91))
+        draw_text("Press SPACE to jump", font, TEXT_COL, 50, 200)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    run = False
+        if event.type == pygame.QUIT:
+            run = False
+            pygame.display.quit()
+        pygame.display.update()
 
 def gameLoop():
     """The application's entry point.
@@ -309,9 +324,7 @@ def gameLoop():
     """
     Updated gameplay loop to be within this function as opposed to main
     """
-    #This is me attempting to create a initial menu
-    draw_text("Press SPACE to jump", font, TEXT_COL, 160, 250)
-
+    
     # the lizard stays in the same x position, so lizard.x is a constant
     # center lizard on screen
     lizard = Lizard(50, int(WINDOW_HEIGHT/2 - Lizard.HEIGHT/2), 2,
@@ -324,7 +337,7 @@ def gameLoop():
     done = paused = False
     while not done:
         clock.tick(FPS)
-
+        
         # Did this manualy because.  If we used pygame.time.set_timer(),
         # The cactuses being added would be messed up if a player pauses game(using p).
         if not (paused or Counter_For_Frames % msec_to_frames(Cactus_Pair.ADD_INTERVAL)):
@@ -374,20 +387,42 @@ def gameLoop():
 
         pygame.display.flip()
         Counter_For_Frames += 1
+        
+        
+    endMenuLoop(score)
     print('You Lost, Game over! Your Score Was: %i' % score)
     print('   Thanks For Playing! :) -From Tiger Team (Johnathan S, Dylan, John M, Mincie)')
-    pygame.quit()
     
-#want to put the loss sequence (game close, tell final score) in its own function
+def endMenuLoop(score):
+    run = True
+    while run:
+        display_surface.fill((52, 78, 91))
+        draw_text("GAME OVER! Your Score Was: %i" %score, font, TEXT_COL, 50, 200)
+        draw_text("Press Space to Play again", font, TEXT_COL, 50, 300)
+        draw_text("Press ESC to Quit", font, TEXT_COL, 50, 400)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    gameLoop()
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    pygame.display.quit()
+        #if event.type == pygame.QUIT:
+            #run = False
+        pygame.display.update()
+
+    
+    
+    
+        
+    
+    
 
 
-#if __name__ == '__main__':
-    # Check if the current module is the main module, identified by __name__ being 'flappyLizard'.
-    # If the module is imported, __name__ will be different. In that case, this block won't be executed.
-    # If executed (e.g., by double-clicking the file), invoke the main function.
-  #   gameLoop()
 
 def main():
+    startMenuLoop()
     gameLoop()
-    
+    pygame.quit()
+
 main()
