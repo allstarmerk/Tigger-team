@@ -261,7 +261,8 @@ def load_images():
             'Cactus-Tip': load_image('Cactus_Tip.png'),
             'Cactus-body': load_image('Cactus_body.png'),
             'lizard-FacingUp': load_image('lizard_Facing_Up.png'),
-            'lizard-FacingDown': load_image('lizard_Facing_Down.png')}
+            'lizard-FacingDown': load_image('lizard_Facing_Down.png'),
+            'tiger-team': load_image('TigerTeam.png')}
 
 
 def frames_to_msec(frames, fps=FPS):
@@ -313,7 +314,6 @@ def startMenuLoop():
         draw_text("FLAPPY LIZARD", font, TEXT_COL, 50, 100)
         draw_text("Press SPACE to Jump and Start!!", font, TEXT_COL, 50, 150)
         draw_text("Created by the Tiger Team", font, TEXT_COL, 50, 400)
-        
         #Detects button press that finishes this function and since
         #it is run in main, it goes right into the main game loop
         #and runs the game
