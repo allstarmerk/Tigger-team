@@ -1,0 +1,166 @@
+LIZARD CLASS
+    FROM LINE 20 (class lizard)
+        This class represents the player-controlled lizard in the game.
+        The lizard serves as the player and responds to player input. 
+        It can ascend when prompted (space bar up arrow), or descend due to gravity when not climbing. 
+        The main objective is to navigate the lizard through the openings between Cactus, earning one point for each successful passage. 
+        Colliding with a cactus results in the end of the game.
+
+        Attributes:
+        - x: The X coordinate of the lizard.
+        - y: The Y coordinate of the lizard.
+        - MAX_REMAINING_FLY_TIME: The remaining milliseconds for the lizard to complete its climb. 
+        A full climb takes lizard.FLY_TIME milliseconds.
+
+        Constants:
+        - WIDTH: The width, in pixels, of the lizard's image.
+        - HEIGHT: The height, in pixels, of the lizard's image.
+        - GRAVITY_SPEED: The speed, in pixels per millisecond, at which the lizard descends when not climbing.
+        - FLYING_SPEED: The speed, in pixels per millisecond, at which the lizard ascends while climbing, on average. Refer to the lizard.update docstring for more details.
+        - FLY_TIME: The number of milliseconds required for the lizard to execute a complete fly.
+
+    FROM LINE 28 (def __init__)
+        Parameters:
+            - x: Initial X coordinate of the lizard.
+            - y: Initial Y coordinate of the lizard.
+            - MAX_REMAINING_FLY_TIME: The max amount of milliseconds for the lizard to climb from its location. 
+            - A complete climb takes the time that lizard.FLY_TIME milliseconds is set too. 
+
+    FROM LINE 38 (def update)
+        This function employs the function to ensure a gradual ascent:
+        The lizard makes minimal upward movement in the initial and final frames,
+        while experiencing significant ascent in the middle frames.
+        A complete ascent cycle takes FLY_TIME milliseconds, with the lizard
+        ascending at an average speed of FLYING_SPEED px/ms.
+        If the lizard's MAX_REMAINING_FLY_TIME attribute was > 0 when this method
+        is called, it will be automatically decremented accordingly.
+
+        Parameters:
+        Frame_Counter: The number of frames that have passed since the last call
+         of this method starts @ 1.
+        
+    FROM LINE 49 (def image)
+        This will decide whether to return an image where the lizard
+        is pointing upward or where it is pointing downward
+        based on pygame.time.get_ticks().  This will animate the
+        lizard going up & Down, Since pygame doesn't support animated GIFs.
+    
+    FROM LINE 57 (def mask)
+        Generate a collision detection bitMask by excluding pixels in self.image 
+        with any transparency levels exceeding 127
+    
+    FROM LINE 65 (def rect)
+        Retrieve the lizard's coordinates, width, and height information in the form of a pygame.Rect.
+
+CACTUS_PAIR CLASS
+    FROM LINE 70 (class Cactus_Pair)
+        Defines a Cactus Pair object representing obstacles in the game.
+
+        A Cactus Pair consists of a top and bottom cactus, creating a passage
+        for the lizard to navigate through. Colliding with either part of
+        the Cactus Pair results in the end of the game.
+
+        Attributes:
+        x: Float representing the X position of the Cactus Pair for smooth
+            movement. There is no y attribute, as it is always set to 0.
+        image: Pygame.Surface that can have the pixels rendered to the display surface to
+            visually represent the Cactus Pair.
+        Mask: BitMask excluding pixels in self.image with transparency
+            greater than 127, useful for collision detection.
+        Top_Cactus_Pair_Pieces: Number of pieces, including the end piece, in the top cactus.
+        Bottom_Cactus_Pair_Pieces: Number of pieces, including the end piece, in the
+            bottom cactus.
+
+        Constants:
+        WIDTH: Width of a cactus piece and the Cactus Pair's image in pixels.
+        PIECE_HEIGHT: Height of a cactus piece in pixels.
+        ADD_INTERVAL: time in milliseconds between adding new cactus peices.
+
+    FROM LINE 76 (def __init__)
+        Initialises a new random Cactus_Pair.
+
+        The new Cactus_Pair will automatically be assigned an x attribute of
+        float(WINDOW_WIDTH - 1).
+
+        Arguments:
+        Cactus_Tip_img: The image to use to represent a cactus end piece.
+        Cactus_body_img: The image to use to represent one horizontal slice
+        of a cactus body.
+
+    FROM LINE 134 (def update)
+        Update the Cactus_Pair's position.
+
+        Arguments:
+        Frame_Counter: The number of frames elapsed since this method was
+        last called.
+    
+    FROM LINE 138 (def collides_with)
+        Get whether the lizard collides with a cactus in this Cactus_Pair.
+
+        Arguments:
+        lizard: The lizard which should be tested for collision with this
+        Cactus_Pair.
+    
+def load_images()
+    FROM LINE 143 (def load_images)
+        Load all images required by the game.
+
+        The returned has the following keys:
+        background: The game's background image.
+        lizard-FacingUp: An image of the lizard with its wing pointing upward.
+            Use this and lizard-FacingDown to create a flapping lizard.
+        lizard-FacingDown: An image of the lizard with its wing pointing downward.
+            Use this and lizard-FacingUp to create a flapping lizard.
+        Cactus-Tip: An image of a cactus end piece.
+            Use this and cactus-body to make cactus peices.
+        Cactus-body: An image of a slice of a cactus body.  Use this and
+            cactus-body to make Cactus.
+        
+    FROM LINE 145 (def load_image)
+        Return the loaded pygame image with the specified file name.
+
+        This function looks for images in the game's images folder
+        (dirname(__file__)/images/). All images are converted before being
+        returned to speed up blitting.
+
+        Arguments:
+        img_file_name: The file name (including its extension, e.g.
+        '.png') of the required image, without a file path.
+        
+def frames_to_msec()
+    FROM LINE 162 (def frames_to_msec)
+        Convert frames to milliseconds at the specified framerate.
+
+        Arguments:
+        frames: How many frames to convert to milliseconds.
+        fps: The framerate to use for conversion.  Default: FPS.
+    
+def msec_to_frames()
+    FROM LINE 166 (def msec_to_frames)
+        Convert milliseconds to frames at the specified framerate.
+
+        Arguments:
+        milliseconds: How many milliseconds to convert to frames.
+        fps: The framerate to use for conversion.  Default: FPS.
+    
+def startMenuLoop()
+    FROM LINE 186 (def startMenuLoop)
+        This is the start menu loop where the player starts out
+        it shows a little start prompt and message for the player
+        to get started
+
+def gameLoop()
+    FROM LINE 206 (def gameLoop)
+        The application's entry point.
+
+        If someone executes this module (instead of importing it, for
+        example), this function is called.
+        
+        Updated gameplay loop to be within this function as opposed to main
+    
+def endMenuLoop()
+    FROM LINE 278 (def endMenuLoop)
+        This is the end menu loop that is run at the end of the main gameplay loop.
+        This function prompts the user if they want to play again or if they
+        want to quit the game.
+        It also displays the user's score from their previous play
